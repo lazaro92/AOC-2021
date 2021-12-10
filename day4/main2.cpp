@@ -4,11 +4,6 @@
 #include <vector>
 #include <algorithm>
 
-struct position {
-    int x;
-    int y;
-};
-
 std::vector<int> parseLine(const std::string &line, const char scape = ' ')
 {
     std::vector<int> result;
@@ -61,6 +56,8 @@ void markBoardPositionWhereNumberFound(
 { 
     int sumHorizontal = 0;
     int sumVertical = 0;
+    bool result = false;
+    std::vector<int> indexesToDelete;
     for (int i = 0; i < matrices.size(); ++i)
     {   
         for (int x = 0; x < 5; ++x)
@@ -73,15 +70,18 @@ void markBoardPositionWhereNumberFound(
             if (sumHorizontal == 5 || sumVertical == 5)
             {
                 winner = matrices[i];
-                boolMatrices.erase(boolMatrices.begin() + i);
-                matrices.erase(matrices.begin() + i);     
-                return true;
+                indexesToDelete.push_back(i);
+                result = true;
             }
             sumHorizontal = 0;
             sumVertical = 0;
         }
     }
-    return false;
+    for (int i = indexesToDelete.size()-1; i >= 0; --i){
+        matrices.erase(matrices.begin() + indexesToDelete[i]);     
+        boolMatrices.erase(boolMatrices.begin() + indexesToDelete[i]);
+    }
+    return result;
 }
 
 int main(int argc, char *argv[])
@@ -102,7 +102,6 @@ int main(int argc, char *argv[])
         std::getline(infile, line); // get next empty line
     }
 
-    int numMatrices= 0;
     std::vector<std::vector<int>> matrix;
     while (std::getline(infile, line))
     {
@@ -110,7 +109,6 @@ int main(int argc, char *argv[])
         {
             matrices.push_back(matrix);
             matrix.clear();
-            ++numMatrices;
         }
         else
         {
@@ -129,12 +127,10 @@ int main(int argc, char *argv[])
     bool temp, winner = false;
     int lastNum = 0, i = 0;
     std::vector<std::vector<int>> lastWinnerBoard;
+
     while (i < numbers.size())
     {
-        // mark the boards position
         markBoardPositionWhereNumberFound(matrices, boolMatrices, numbers[i]);
-
-        // check for the winner board
         temp = getWinnerBoard(matrices, boolMatrices, lastWinnerBoard);
         if (temp)
         {
@@ -143,26 +139,24 @@ int main(int argc, char *argv[])
         }
         ++i;
     }
-    
-    i = lastNum + 1;
 
+    i = lastNum;
     int result = 0;
     if (winner) {
-        std::cout << "A";
         for (const auto &row: lastWinnerBoard)
         {
             for (const auto &num: row)
             {
-                if (std::find(numbers.begin(), numbers.begin() + i, num) == numbers.begin() + i)
+                if (std::find(numbers.begin(), numbers.begin() + i+1, num) == numbers.begin() + i+1)
                 {
                     result += num;
                 }                
             }
         }
-        result *= numbers[i-1];
+        std::cout << std::to_string(result) << " * " << std::to_string(numbers[i]) << std::endl;
+        result *= numbers[i];
     }
 
     std::cout << std::to_string(result) << std::endl;
-
     return 0;
 }

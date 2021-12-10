@@ -4,11 +4,6 @@
 #include <vector>
 #include <algorithm>
 
-struct position {
-    int x;
-    int y;
-};
-
 std::vector<int> parseLine(const std::string &line, const char scape = ' ')
 {
     std::vector<int> result;

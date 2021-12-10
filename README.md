@@ -8,3 +8,4 @@ My sample programs get the input from the file passed as 1st argument.
 ##Notes
 
 1. Day 3 part 2 requires refactor in getOGR and getCSR functions (only change a condition) (idea pass a anonimous function with the comparision that returns boolean).
+2. Day 4 part 2 the sample input gets the correct solution but not the real input. Check why.

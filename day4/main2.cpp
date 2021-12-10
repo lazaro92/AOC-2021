@@ -27,10 +27,10 @@ std::vector<int> parseLine(const std::string &line, const char scape = ' ')
 }
 
 void markBoardPositionWhereNumberFound(
-    const std::vector<std::vector<std::vector<int>>> &matrices,
-    std::vector<std::vector<std::vector<bool>>> &boolMatrices,
-    const int number
-)
+        const std::vector<std::vector<std::vector<int>>> &matrices,
+        std::vector<std::vector<std::vector<bool>>> &boolMatrices,
+        const int number
+        )
 {
     // mark the boards position
     for (int i = 0; i < matrices.size(); ++i)
@@ -48,11 +48,11 @@ void markBoardPositionWhereNumberFound(
     }
 }
 
- bool getWinnerBoard(
-    std::vector<std::vector<std::vector<int>>> &matrices,
-    std::vector<std::vector<std::vector<bool>>> &boolMatrices,
-    std::vector<std::vector<int>> &winner
-)
+bool getWinnerBoard(
+        std::vector<std::vector<std::vector<int>>> &matrices,
+        std::vector<std::vector<std::vector<bool>>> &boolMatrices,
+        std::vector<std::vector<int>> &winner
+        )
 { 
     int sumHorizontal = 0;
     int sumVertical = 0;
@@ -119,7 +119,7 @@ int main(int argc, char *argv[])
 
     // CREATING BOOL MATRICES n*5*5 -> FALSE
     std::vector<std::vector<std::vector<bool>>> boolMatrices;
-    
+
     for (int i = 0; i < matrices.size(); ++i)
         boolMatrices.push_back(std::vector<std::vector<bool>> (5, std::vector<bool>(5)));
 
